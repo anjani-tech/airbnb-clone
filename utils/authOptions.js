@@ -49,7 +49,6 @@ export const authOptions = {
         },
         //Session callback function that modifies the session object
         async session({ session }) {
-            console.log("Session before DB lookup:", session); // Debugging line
             if (session.user) {
                 // 1. Get user from DB
                 const user = await User.findOne({ email: session.user.email });
