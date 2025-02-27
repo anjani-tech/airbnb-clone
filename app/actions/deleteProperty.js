@@ -7,6 +7,8 @@ const { getSessionUser } = require("@/utils/getSessionUser");
 const { revalidatePath } = require("next/cache");
 
 async function deleteProperty(propertyId) {
+    await connectDB();
+
     const sessionUser = await getSessionUser();
     if (!sessionUser || !sessionUser.userId) {
         throw new Error('User Id is required');
