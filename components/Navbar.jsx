@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import profileDefault from "@/assets/images/profile.png";
 import logo from "@/assets/images/logo-white.png";
@@ -8,6 +8,7 @@ import { FaGoogle } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 import UnreadMessageCount from "./UnreadMessageCount";
+import useOnClickOutside from "@/custom-hooks/onClickOutside";
 
 const Navbar = () => {
   const { data: session } = useSession();
@@ -16,6 +17,9 @@ const Navbar = () => {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const pathName = usePathname();
   const [providers, setProviders] = useState(null);
+  const profileMenuRef = useRef(null);
+
+  useOnClickOutside(profileMenuRef, () => setIsProfileMenuOpen(false));
 
   useEffect(() => {
     const setAuthProviders = async () => {
@@ -173,6 +177,7 @@ const Navbar = () => {
                     aria-orientation="vertical"
                     aria-labelledby="user-menu-button"
                     tabIndex="-1"
+                    ref={profileMenuRef}
                   >
                     <Link
                       href="/profile"
