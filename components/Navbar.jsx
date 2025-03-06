@@ -219,13 +219,13 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* <!-- Mobile menu, show/hide based on menu state. --> */}
+      {/* Mobile menu, show/hide based on menu state. */}
       {isMobileMenuOpen && (
         <div id="mobile-menu">
           <div className="space-y-1 px-2 pb-3 pt-2">
             <Link
               href="/"
-              className={`${pathName === "/" ? "bg-black" : ""}  text-white block rounded-md px-3 py-2 text-base font-medium`}
+              className={`${pathName === "/" ? "bg-black" : ""} text-white block rounded-md px-3 py-2 text-base font-medium`}
             >
               Home
             </Link>
@@ -243,11 +243,38 @@ const Navbar = () => {
                 Add Property
               </Link>
             )}
+
+            {/* Mobile Login/Register Button */}
             {!session && (
-              <button className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-5">
-                <i className="fa-brands fa-google mr-2"></i>
+              <button
+                className="flex items-center text-white bg-gray-700 hover:bg-gray-900 hover:text-white rounded-md px-3 py-2 my-5"
+                onClick={() => {
+                  // Replace this with the desired login provider
+                  if (providers) {
+                    signIn(providers[0]?.id); // Assuming the first provider (like Google) is used
+                  }
+                }}
+              >
+                <FaGoogle className="mr-2" />
                 <span>Login or Register</span>
               </button>
+            )}
+
+            {/* Profile Section for Logged-in User */}
+            {session && (
+              <Link
+                href="/profile"
+                className="flex items-center text-white rounded-md px-3 py-2 text-base font-medium"
+              >
+                <Image
+                  src={profileImage || profileDefault}
+                  alt="Profile"
+                  className="h-8 w-8 rounded-full mr-2"
+                  width={32}
+                  height={32}
+                />
+                Your Profile
+              </Link>
             )}
           </div>
         </div>
